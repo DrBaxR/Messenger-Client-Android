@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ public class UserActivity extends AppCompatActivity {
     UserService userService;
     EditText edUid;
     EditText edUemail;
+    EditText edUPasword;
     Button btnBack;
     Button btnSave;
     Button btnDel;
@@ -40,6 +42,7 @@ public class UserActivity extends AppCompatActivity {
         btnBack =(Button) findViewById(R.id.btnBack);
         btnSave =(Button) findViewById(R.id.btnSave);
         btnDel =(Button) findViewById(R.id.btnDel);
+        edUPasword = (EditText) findViewById(R.id.edUpassword);
 
         userService = Api.getUserService();
 
@@ -61,15 +64,17 @@ public class UserActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(validateEmailAdress(edUemail)){
                 User u = new User();
                 u.setEmail(edUemail.getText().toString());
+                u.setPassword(edUPasword.getText().toString());
                 if(userId !=null && userId.trim().length()>0){
                     //update user
                 }else{
                     //add user
                     addUser(u);
                 }
-            }
+            }}
         });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +112,18 @@ public class UserActivity extends AppCompatActivity {
                 Log.e("ErrorL ",t.getMessage());
             }
         });
+    }
+
+    private boolean validateEmailAdress(EditText email){
+        String emailInput = email.getText().toString();
+        if(!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+            Toast.makeText(this,"You have successfully registered",Toast.LENGTH_SHORT).show();
+            return true;
+        }else{
+            Toast.makeText(this,"Email validation invalid",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
     }
 
     public void deleteUser(int id){
