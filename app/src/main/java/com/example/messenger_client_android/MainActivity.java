@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     list = response.body();
 
-                    listView.setAdapter(new UserAdapter(MainActivity.this,R.layout.list_user, list.getEntity().getUsers()));
+                   // listView.setAdapter(new UserAdapter(MainActivity.this,R.layout.list_user, list.getEntity().getUsers()));
                 }
             }
 
