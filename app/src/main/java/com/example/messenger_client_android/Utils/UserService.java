@@ -1,5 +1,6 @@
 package com.example.messenger_client_android.Utils;
 
+import com.example.messenger_client_android.Model.Login;
 import com.example.messenger_client_android.Model.User;
 import com.example.messenger_client_android.Model.UserList;
 
@@ -16,21 +17,20 @@ import retrofit2.http.Path;
 
 public interface UserService {
 
-    @Headers({
-            "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2bGFkdGVzdGFuZHJvZGlAbWFpbC5jb20iLCJpYXQiOjE2MTk0NTU5MDAsImV4cCI6MTYxOTU0MjMwMH0.eQJ-CdSE61BjduXA8zAAeaYgf6yey40SmgbngXZioX0CHQ9HCEwVcAkqp-tlnI_2WYjM5qUHP_UeprG1cenV5A"
-    })
+
     @GET("/users")
     Call<List<User>> getUsers();
 
-    @Headers({
-            "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2bGFkdGVzdGFuZHJvZGlAbWFpbC5jb20iLCJpYXQiOjE2MTk0NTU5MDAsImV4cCI6MTYxOTU0MjMwMH0.eQJ-CdSE61BjduXA8zAAeaYgf6yey40SmgbngXZioX0CHQ9HCEwVcAkqp-tlnI_2WYjM5qUHP_UeprG1cenV5A"
-    })
+
     @GET("/users")
     Call<UserList> getUserList();
 
 
     @POST("/api/auth/signup")
     Call<User> addUser(@Body User user);
+
+    @POST("/api/auth/signin")
+    Call<User> login(@Body Login login);
 
     @GET("/users/{id}")
     Call<User> getOneUser(@Path("id") int id);

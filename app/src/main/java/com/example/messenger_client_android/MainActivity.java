@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAddUser;
     Button btnGetUsersList;
     ListView listView;
+    Button btnLogin;
 
     UserService userService;
     UserList list = new UserList();
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         btnAddUser = (Button) findViewById(R.id.btnAddUser);
         btnGetUsersList = (Button) findViewById(R.id.btnGetUsersList);
         listView = (ListView) findViewById(R.id.listView);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
         userService = Api.getUserService();
 
         btnGetUsersList.setOnClickListener(new View.OnClickListener(){
@@ -58,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserActivity.class);
                 intent.putExtra("user_email", "");
+                startActivity(intent);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
