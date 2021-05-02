@@ -13,6 +13,7 @@ import com.example.messenger_client_android.Model.User;
 import com.example.messenger_client_android.Utils.Api;
 import com.example.messenger_client_android.Utils.UserService;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private static String token;
+
     public void login(){
         Login login = new Login(email.getText().toString(),password.getText().toString());
         Call<User> call = userService.login(login);
@@ -51,8 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(LoginActivity.this,"login ok !", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(LoginActivity.this,response.body().accessToken(), Toast.LENGTH_SHORT).show();
+                    //token =
                 }else{
                     Toast.makeText(LoginActivity.this,"login not correct", Toast.LENGTH_SHORT).show();
                 }
@@ -67,4 +70,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
