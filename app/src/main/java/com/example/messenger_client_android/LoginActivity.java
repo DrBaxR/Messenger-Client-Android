@@ -39,12 +39,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 login();
+
             }
         });
 
     }
 
-    private static String token;
+    public static String token = "Bearer ";
 
     public void login(){
         Login login = new Login(email.getText().toString(),password.getText().toString());
@@ -54,8 +55,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(LoginActivity.this,response.body().accessToken(), Toast.LENGTH_SHORT).show();
-                    //token =
+
+                    token = token + response.body().accessToken();
+                    Toast.makeText(LoginActivity.this,"Login successfully", Toast.LENGTH_SHORT).show();
+
+
                 }else{
                     Toast.makeText(LoginActivity.this,"login not correct", Toast.LENGTH_SHORT).show();
                 }
