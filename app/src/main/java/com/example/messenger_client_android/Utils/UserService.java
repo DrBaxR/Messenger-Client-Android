@@ -1,5 +1,6 @@
 package com.example.messenger_client_android.Utils;
 
+import com.example.messenger_client_android.Model.Group;
 import com.example.messenger_client_android.Model.Login;
 import com.example.messenger_client_android.Model.User;
 import com.example.messenger_client_android.Model.UserList;
@@ -35,13 +36,15 @@ public interface UserService {
     Call<User> login(@Body Login login);
 
 
-
-
     @GET("/users/{id}")
-    Call<User> getOneUser(@Path("id") int id);
+    Call<User> getLoggedUser(@Path("id") String  id);
 
     @DELETE("/users/{id}")
-    Call<User> deleteUser(@Path("id") int id);
+    Call<User> deleteUser(@Path("id") String id);
+
+
+    @POST("/users/{id}/groups")
+    Call<Group> addGroup(@Body Group group, @Path("id") String id, @Header("Authorization") String authHeader);
 
 
 

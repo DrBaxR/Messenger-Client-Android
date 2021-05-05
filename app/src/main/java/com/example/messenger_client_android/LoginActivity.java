@@ -1,6 +1,8 @@
 package com.example.messenger_client_android;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     Button btnLogin;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +42,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 login();
-
             }
         });
 
     }
 
-    public static String token = "Bearer ";
-
+    public static String token;
+    public static String currentId;
     public void login(){
         Login login = new Login(email.getText().toString(),password.getText().toString());
         Call<User> call = userService.login(login);
@@ -56,9 +58,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
 
-                    token = token + response.body().accessToken();
+                    token = "Bearer " + response.body().accessToken();
+                    currentId = response.body().getId();
                     Toast.makeText(LoginActivity.this,"Login successfully", Toast.LENGTH_SHORT).show();
+                    if(token != null){
 
+                        Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
+                        startActivity(intent);
+
+                    }
 
                 }else{
                     Toast.makeText(LoginActivity.this,"login not correct", Toast.LENGTH_SHORT).show();

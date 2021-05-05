@@ -64,6 +64,7 @@ public class UserActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(validateEmailAdress(edUemail)){
                 User u = new User();
                 u.setEmail(edUemail.getText().toString());
@@ -73,6 +74,7 @@ public class UserActivity extends AppCompatActivity {
                 }else{
                     //add user
                     addUser(u);
+
                 }
             }}
         });
@@ -85,15 +87,7 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        btnDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteUser(Integer.parseInt(userId));
 
-                Intent intent = new Intent(UserActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -126,7 +120,7 @@ public class UserActivity extends AppCompatActivity {
 
     }
 
-    public void deleteUser(int id){
+    public void deleteUser(String id){
         Call<User> call = userService.deleteUser(id);
         call.enqueue(new Callback<User>() {
             @Override
@@ -142,6 +136,8 @@ public class UserActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 
