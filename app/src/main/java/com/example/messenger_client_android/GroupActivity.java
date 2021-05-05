@@ -14,6 +14,9 @@ import com.example.messenger_client_android.Model.User;
 import com.example.messenger_client_android.Utils.Api;
 import com.example.messenger_client_android.Utils.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +26,10 @@ public class GroupActivity extends AppCompatActivity {
     Button addGroupBtn;
     EditText groupName;
     UserService userService;
+    Button addUserBtn;
+    EditText userEmail;
+    public List<String> userToBeAdded = new ArrayList<String>();
+
 
 
     @Override
@@ -31,6 +38,9 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
         addGroupBtn = (Button) findViewById(R.id.addGroup);
         groupName = (EditText) findViewById(R.id.groupName);
+        addUserBtn = (Button) findViewById(R.id.addUserToGroup);
+        userEmail = (EditText) findViewById(R.id.userEmailToAdd);
+
 
         userService = Api.getUserService();
 
@@ -42,7 +52,20 @@ public class GroupActivity extends AppCompatActivity {
                 addGroup(g,LoginActivity.currentId);
             }
         });
+
+        addUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //IN PROGRESS
+                String email = userEmail.getText().toString();
+                userToBeAdded.add(email);
+                addUserToGroup(userToBeAdded,LoginActivity.currentId);
+            }
+        });
     }
+
+
 
     public void addGroup(Group g, String id){
         Call<Group> call = userService.addGroup(g,id,LoginActivity.token);
@@ -50,6 +73,8 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Group> call, Response<Group> response) {
                 if(response.isSuccessful()){
+
+
                     Toast.makeText(GroupActivity.this, "Group created successfully", Toast.LENGTH_SHORT).show();
 
                 }
@@ -61,6 +86,25 @@ public class GroupActivity extends AppCompatActivity {
                 Log.e("Error",t.getMessage());
             }
         });
+    }
+
+    public void addUserToGroup(List<String> email, String id){
+
+        Call<Group> call = userService.addUserToGroup(email,id,LoginActivity.token);
+        call.enqueue(new Callback<Group>() {
+            @Override
+            public void onResponse(Call<Group> call, Response<Group> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(GroupActivity.this, "User added successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Group> call, Throwable t) {
+                Toast.makeText(GroupActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 

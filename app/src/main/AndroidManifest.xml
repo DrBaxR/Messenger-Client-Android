@@ -16,6 +16,7 @@
         <activity android:name=".UserActivity"></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".GroupActivity"></activity>
+        <activity android:name=".AfterLoginActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
