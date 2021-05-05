@@ -6,7 +6,15 @@ public class User {
     private String email;
     private String password;
     private String accessToken;
+    private String username;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String accessToken() {
         return accessToken;
