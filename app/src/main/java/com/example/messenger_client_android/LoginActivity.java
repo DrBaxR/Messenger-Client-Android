@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Login successfully", Toast.LENGTH_SHORT).show();
                     if(token != null){
 
-                        Intent intent = new Intent(LoginActivity.this, GroupActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, AfterLoginActivity.class);
                         startActivity(intent);
 
                     }

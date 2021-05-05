@@ -20,32 +20,36 @@ import retrofit2.http.Path;
 
 public interface UserService {
 
-
-    @GET("/users")
-    Call<List<User>> getUsers();
-
-
-    @GET("/users")
-    Call<UserList> getUserList();
-
-
+    //Login & Register
     @POST("/api/auth/signup")
     Call<User> addUser(@Body User user);
 
     @POST("/api/auth/signin")
     Call<User> login(@Body Login login);
 
+    //Users
+    @GET("/users")
+    Call<List<User>> getUsers();
 
-    @GET("/users/{id}")
-    Call<User> getLoggedUser(@Path("id") String  id);
+    @GET("/users")
+    Call<UserList> getUserList();
 
     @DELETE("/users/{id}")
     Call<User> deleteUser(@Path("id") String id);
 
+    @PUT("/users/{id}")
+    Call<User> updateUsername(@Body User user, @Path("id") String id, @Header("Authorization") String authHeader);
 
+
+    //GROUPS
     @POST("/users/{id}/groups")
     Call<Group> addGroup(@Body Group group, @Path("id") String id, @Header("Authorization") String authHeader);
 
+    @PUT("/groups/{id}/users")
+    Call<Group> addUserToGroup(@Body List<String> userEmail, @Path("id") String id, @Header("Authorization") String authHeader);
+
+    @GET("/users/{id}/groups")
+    Call<List<Group>> getAllGroups(@Path("id")String id, @Header("Authorization") String authHeader);
 
 
 }

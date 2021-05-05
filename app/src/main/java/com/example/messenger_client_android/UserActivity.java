@@ -26,6 +26,7 @@ public class UserActivity extends AppCompatActivity {
     EditText edUid;
     EditText edUemail;
     EditText edUPasword;
+    EditText username;
     Button btnBack;
     Button btnSave;
     Button btnDel;
@@ -42,6 +43,7 @@ public class UserActivity extends AppCompatActivity {
         btnBack =(Button) findViewById(R.id.btnBack);
         btnSave =(Button) findViewById(R.id.btnSave);
         btnDel =(Button) findViewById(R.id.btnDel);
+        username = (EditText) findViewById(R.id.username);
         edUPasword = (EditText) findViewById(R.id.edUpassword);
 
         userService = Api.getUserService();
@@ -69,6 +71,7 @@ public class UserActivity extends AppCompatActivity {
                 User u = new User();
                 u.setEmail(edUemail.getText().toString());
                 u.setPassword(edUPasword.getText().toString());
+                u.setUsername(username.getText().toString());
                 if(userId !=null && userId.trim().length()>0){
                     //update user
                 }else{
