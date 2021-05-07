@@ -7,6 +7,7 @@ import com.example.messenger_client_android.Model.UserList;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -45,8 +46,9 @@ public interface UserService {
     @POST("/users/{id}/groups")
     Call<Group> addGroup(@Body Group group, @Path("id") String id, @Header("Authorization") String authHeader);
 
-    @PUT("/groups/{id}/users")
-    Call<Group> addUserToGroup(@Body List<String> userEmail, @Path("id") String id, @Header("Authorization") String authHeader);
+
+    @POST("/groups/{id}/users")
+    Call<Group> addUserToGroup(@Body RequestBody userEmail, @Path("id") String id, @Header("Authorization") String authHeader);
 
     @GET("/users/{id}/groups")
     Call<List<Group>> getAllGroups(@Path("id")String id, @Header("Authorization") String authHeader);

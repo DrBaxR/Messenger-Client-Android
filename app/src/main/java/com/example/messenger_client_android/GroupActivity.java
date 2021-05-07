@@ -17,6 +17,8 @@ import com.example.messenger_client_android.Utils.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +30,7 @@ public class GroupActivity extends AppCompatActivity {
     UserService userService;
     Button addUserBtn;
     EditText userEmail;
-    public List<String> userToBeAdded = new ArrayList<String>();
+
 
 
 
@@ -59,8 +61,10 @@ public class GroupActivity extends AppCompatActivity {
 
                 //IN PROGRESS
                 String email = userEmail.getText().toString();
-                userToBeAdded.add(email);
-                addUserToGroup(userToBeAdded,LoginActivity.currentId);
+                //email = email.replace("\"", "");
+                RequestBody body = RequestBody.create(MediaType.parse("text/plain"),email);
+
+                addUserToGroup(body,"60955fdfb07318720d080f68");
             }
         });
     }
@@ -88,9 +92,10 @@ public class GroupActivity extends AppCompatActivity {
         });
     }
 
-    public void addUserToGroup(List<String> email, String id){
+    public void addUserToGroup(RequestBody email, String id){
 
         Call<Group> call = userService.addUserToGroup(email,id,LoginActivity.token);
+
         call.enqueue(new Callback<Group>() {
             @Override
             public void onResponse(Call<Group> call, Response<Group> response) {
@@ -101,7 +106,7 @@ public class GroupActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Group> call, Throwable t) {
-                Toast.makeText(GroupActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                Log.e("Error",t.getMessage());
             }
         });
 
