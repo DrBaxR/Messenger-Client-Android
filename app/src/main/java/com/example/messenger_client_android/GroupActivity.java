@@ -29,6 +29,7 @@ public class GroupActivity extends AppCompatActivity {
     EditText groupName;
     UserService userService;
     Button addUserBtn;
+    Button getUserBtn;
     EditText userEmail;
 
 
@@ -42,6 +43,7 @@ public class GroupActivity extends AppCompatActivity {
         groupName = (EditText) findViewById(R.id.groupName);
         addUserBtn = (Button) findViewById(R.id.addUserToGroup);
         userEmail = (EditText) findViewById(R.id.userEmailToAdd);
+        getUserBtn = (Button) findViewById(R.id.getUserFromGroup);
 
 
         userService = Api.getUserService();
@@ -67,6 +69,16 @@ public class GroupActivity extends AppCompatActivity {
                 addUserToGroup(body,"60955fdfb07318720d080f68");
             }
         });
+
+        getUserBtn.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //id hardcodat din baza de date
+                String id = "6092dd621fbce535c3d09593";
+                getUsersFromGroup(id);
+            }
+        }));
+
     }
 
 
@@ -111,6 +123,26 @@ public class GroupActivity extends AppCompatActivity {
         });
 
     }
+
+    public void getUsersFromGroup(String id){
+        Call<List<User>> call = userService.getUsersFromGroup(id,LoginActivity.token);
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(GroupActivity.this, "Watch at the console", Toast.LENGTH_SHORT).show();
+                    System.out.println(response.body().get(0).getEmail());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 
 
 }

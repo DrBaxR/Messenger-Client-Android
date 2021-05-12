@@ -53,5 +53,7 @@ public interface UserService {
     @GET("/users/{id}/groups")
     Call<List<Group>> getAllGroups(@Path("id")String id, @Header("Authorization") String authHeader);
 
+    @GET("/groups/{id}/users")
+    Call<List<User>> getUsersFromGroup(@Path("id")String id, @Header("Authorization") String authHeader);
 
 }
